@@ -19,14 +19,14 @@
                 @foreach(var item in Model){
                 <tr>
                     <th class="align-middle">
-                       <img class="rounded-circle" src="@item.ProfilePictureUrl" alt="Actor image" sstyle="max-width: 150px"/>
+                       <img class="rounded-circle" src="@item.ProfilePictureUrl" alt="Actor image" style="max-width: 150px"/>
                     </th>
                     <th class="align-middle">@item.ActorName</th>
                     <th class="align-middle">@item.Bio</th>
                      <th class="align-middle">
-                         <a class="btn btn-outline-primary"><i class="bi bi-pencil-square"></i>Edit</a>
-                          <a class="btn btn-outline-info"><i class="bi bi-view-list"></i>Detail</a>
-                           <a class="btn btn-outline-danger"><i class="bi bi-person-x-fill"></i>Delete</a>
+                         <a class="btn btn-outline-primary" asp-controller="Actor" asp-action="Edit" asp-route-id="@item.Id"><i class="bi bi-pencil-square"></i>Edit</a>
+                          <a class="btn btn-outline-info" asp-controller="Actor" asp-action="Detail" asp-route-id="@item.Id"><i class="bi bi-view-list"></i>Detail</a>
+                           <a class="btn btn-outline-danger"  asp-controller="Actor" asp-action="Delete" asp-route-id="@item.Id"><i class="bi bi-person-x-fill"></i>Delete</a>
                      </th>
                 </tr>
                 }
@@ -36,4 +36,4 @@
 
 </div>
 
-
+@await Html.PartialAsync("_ButtonPartialView","Actor")

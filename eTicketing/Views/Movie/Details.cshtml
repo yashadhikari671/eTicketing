@@ -1,0 +1,100 @@
+﻿@model Movie
+@{
+    ViewData["Title"] = "Movies";
+}
+
+
+<div class="row">
+        <div class="col-md-8 offset-2">
+          <div class="card mb-3" >
+               <div class="row g-0">
+                   <div class="col-md-12">
+                       <div class="card-header text-white bg-info">
+                           <p class="card-text">
+                               <h5 classss="card-title">
+                                   @Model.Name
+                                   <a class="text-white float-right" style="cursor: pointer;" asp-action="Edit" asp-route-id="@Model.Id">
+                                       <i class="bi bi-pencil-square cursor-pointer"></i>
+                                   </a>
+                               </h5>
+                           </p>
+                       </div>
+                   </div>
+                   <div class="col-md-6">
+                       <img src="@Model.ImageUrl" width="100%" alt="Image">
+
+                   </div>
+                   <div class="col-md-6">
+                       <p class="card-text"><b>Description:</b> @Model.Description</p>
+                       <p class="card-text"><b>Cinema:</b> 
+                       <a asp-controller="Cinema" asp-action="Details" asp-route-id="@Model.CinemaId">
+                           @Model.Cinema.Name
+                       </a>
+                       </p>
+                       <p class="card-text"><b>Producer:</b> 
+                       <a asp-controller="Producer" asp-action="Details" asp-route-id="@Model.ProducerId">
+                           @Model.Producer.ProducerName
+                       </a>
+                       </p>
+                       <p class="card-text"><b>Category:</b> @Model.MovieCategory</p>
+                       <p class="card-text"><b>Start Date:</b> @Model.StartDate.ToString("dd MM yyyy")</p>
+                       <p class="card-text"><b>End Date:</b> @Model.EndDate.ToString("dd MM yyyy")</p>
+                       <p class="card-text">
+                           <b>
+                               Status:
+                           </b>
+                            @if (DateTime.Now >= Model.StartDate && DateTime.Now <= Model.EndDate)
+                            {
+                                <span class="badge bg-success text-white">Avalable</span>
+                            }
+                            else if (DateTime.Now >= Model.EndDate)
+                            {
+                                <span class="badge bg-danger text-white">Expired</span>
+                            }
+                            else
+                            {
+                                <span class="badge  bg-danger text-white">Upcomming</span>
+                            }
+                        </p>
+                        <p cclass="card-text" >
+                            <b>Actors:</b>
+                            <hr />
+                            <div class="row">
+                                @foreach(var actor in Model.Actors_Movies)
+                                {
+                                    <div class="column text-center ">
+                                        <img class="border-info" src="@actor.Actor.ProfilePictureUrl" alt="Image" style="max-width:150px"/>
+                                        <br/>
+                                        <a asp-controller="Actor" asp-action="Detail" asp-route-Id="@actor.Actor.Id">@actor.Actor.ActorName</a>
+                                    </div>
+                                
+                                }
+
+                            </div>
+
+                        </p>
+
+                   </div>
+               </div>
+              <div class="Col-md-12">
+                   <div class="card-footer">
+                       <a class="btn btn-outline-primary float-right" style="cursor: pointer;" asp-action="Index" ><i class="bi bi-eye-fill"></i>Back to list</a>
+                       <a class="btn btn-success text-white" style="cursor: pointer;"
+                       asp-controller="Orders" asp-action="AddToShippingCart" asp-route-id="@Model.Id">
+                           <i class="bi bi-cart-plus"></i>
+                           Add to card (@Model.Price.ToString("c"))
+                       </a>
+                   </div>
+
+               </div>
+          </div>
+   
+        </div>
+    
+
+       
+    
+
+</div>
+
+

@@ -1,0 +1,56 @@
+﻿@model Actor
+@{
+    ViewData["title"] = "Detail ";
+}
+
+<div class="row text">
+    <div class="col-md-8 offset-2">
+        <p>
+            <h1> @Model.ActorName</h1>
+        </p>
+        <div class="row">
+             <div class="col-md-8 offset-2">
+                
+                     <div class="form-group text-center">
+                             <img id="ProfilepicturePreview" style="max-width: 150px" />
+                    </div>
+                    
+                         <div class="form-group">
+                             <label asp-for="ProfilePictureUrl" class="control-label">Picture url</label>
+                             <input asp-for="ProfilePictureUrl" id="ProfilePictureUrl" readonly class="form-control"/>
+                             <span asp-validation-for="ProfilePictureUrl" class="text-danger"></span>
+                         </div>
+                         
+                         <div class="form-group">
+                             <label asp-for="ActorName" class="control-label"></label>
+                             <input asp-for="ActorName" class="form-control" readonly />
+                             <span asp-validation-for="ActorName" class="text-danger"></span>
+                         </div>
+                         <div class="form-group">
+                             <label asp-for="Bio" class="control-label"></label>
+                             <input asp-for="Bio" class="form-control" readonly />
+                             <span asp-validation-for="Bio" class="text-danger"></span>
+                         </div>
+                     
+                     <div class="form-group">
+                         
+                         <a class="btn btn-outline-success float-right" asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
+                         <a class="btn btn-outline-secondary" asp-action="Index">Show all</a>
+                     </div>
+                 
+             </div>
+            
+        </div>
+
+    </div>
+
+</div>
+@section Scripts{
+    <script>
+        $(document).ready(function() {
+             var output = document.getElementById('ProfilepicturePreview');
+                    output.src = $('#ProfilePictureUrl').val();
+        })
+      
+    </script>
+}

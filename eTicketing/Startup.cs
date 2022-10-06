@@ -1,15 +1,16 @@
 using eTicketing.Data;
+using eTicketing.Data.Cart;
+using eTicketing.Data.Services;
+using eTicketing.Models;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace eTicketing
 {
@@ -26,6 +27,21 @@ namespace eTicketing
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<AppDbcontext>(options => options.UseSqlServer(Configuration.GetConnectionString("connection")));
+            services.AddScoped<IActorService, ActorService>();
+            services.AddScoped<IProducerService, ProducerService>();
+            services.AddScoped<ICinemaService, CinemaService>();
+            services.AddScoped<IMoviesService, MoviesService>();
+            services.AddScoped<IOrdersService, OrderService>();
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddScoped(sc => ShopingCart.GetShopingCart(sc));
+            //Authentication and authorization
+            services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<AppDbcontext>();
+            services.AddMemoryCache();
+            services.AddSession();
+            services.AddAuthentication(options =>
+            {
+                options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+            });
             services.AddControllersWithViews();
         }
 
@@ -46,6 +62,12 @@ namespace eTicketing
             app.UseStaticFiles();
 
             app.UseRouting();
+            app.UseSession();
+
+            app.UseAuthentication();
+            app.UseAuthorization();
+
+
 
             app.UseAuthorization();
 
@@ -55,6 +77,7 @@ namespace eTicketing
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
+            AppDbInitializer.SeedUserAndRolesAsync(app).Wait();
         }
     }
 }

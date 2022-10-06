@@ -1,9 +1,10 @@
 ﻿using eTicketing.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace eTicketing.Data
 {
-    public class AppDbcontext : DbContext
+    public class AppDbcontext : IdentityDbContext<ApplicationUser>
     {
         public AppDbcontext(DbContextOptions<AppDbcontext> options) : base(options)
         {
@@ -28,6 +29,12 @@ namespace eTicketing.Data
         public DbSet<Actor_Movie> ActorS_Movies { get; set; }
         public DbSet<Cinema> Cinemas { get; set; }
         public DbSet<Producer> Producers { get; set; }
+
+        //order related data
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<OrderItem> OrderItems { get; set; }
+        public DbSet<ShoppingCartItem> shoppingCartItems { get; set; }
+
 
        
     }
