@@ -4,6 +4,7 @@ using eTicketing.Data.ViewModel;
 using eTicketing.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Threading.Tasks;
 
@@ -21,6 +22,11 @@ namespace eTicketing.Controllers
             _context = context;
             _userManager = userManager;
             _signInManager = signInManager;
+        }
+        public async Task<IActionResult> Users()
+        {
+            var Users = await _context.Users.ToListAsync();
+            return View(Users);
         }
         public IActionResult Login() => View(new LoginVM());
         [HttpPost]

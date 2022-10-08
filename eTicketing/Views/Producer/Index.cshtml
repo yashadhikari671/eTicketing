@@ -12,7 +12,10 @@
                     <th>Picture</th>
                     <th>FullName</th>
                     <th>Bio</th>
+                     @if(User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                        {
                      <th>Actions</th>
+                        }
                 </tr>
             </thead>
             <tbody>
@@ -23,12 +26,15 @@
                     </th>
                     <th class="align-middle">@item.ProducerName</th>
                     <th class="align-middle">@item.Bio</th>
-                     <th class="align-middle">
-                         <a class="btn btn-outline-primary" asp-controller="Producer" asp-action="Edit" asp-route-id="@item.Id"><i class="bi bi-pencil-square"></i>Edit</a>
-                          <a class="btn btn-outline-info" asp-action="Details" asp-route-id="@item.Id"><i class="bi bi-view-list"></i>Detail</a>
-                           <a class="btn btn-outline-danger"asp-action="Delete" asp-route-id="@item.Id"><i class="bi bi-person-x-fill"></i>Delete</a>
-                     </th>
-                </tr>
+                        @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                        {
+                            <th class="align-middle">
+                                <a class="btn btn-outline-primary" asp-controller="Producer" asp-action="Edit" asp-route-id="@item.Id"><i class="bi bi-pencil-square"></i>Edit</a>
+                                <a class="btn btn-outline-info" asp-action="Details" asp-route-id="@item.Id"><i class="bi bi-view-list"></i>Detail</a>
+                                <a class="btn btn-outline-danger"asp-action="Delete" asp-route-id="@item.Id"><i class="bi bi-person-x-fill"></i>Delete</a>
+                            </th>
+                        }
+                    </tr>
                 }
             </tbody>
         </table>

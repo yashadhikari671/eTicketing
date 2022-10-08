@@ -1,0 +1,33 @@
+﻿@model List<ApplicationUser>
+@{
+    ViewData["Title"] = "list of Actor";
+}
+<h1>User List</h1>
+
+<div class="row">
+    <div class="col-md-8 offset-md-2">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>FullNmae</th>
+                    <th>UserName</th>
+                    <th>Email</th>
+                    
+                </tr>
+            </thead>
+            <tbody>
+                @foreach(var item in Model){
+                <tr>
+                    <th class="align-middle">
+                      @item.FullName
+                    </th>
+                    <th class="align-middle">@item.UserName</th>
+                    <th class="align-middle">@item.Email</th>
+
+                </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+</div>

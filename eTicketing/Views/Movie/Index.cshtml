@@ -2,7 +2,7 @@
 @{
     ViewData["Title"] = "list of Movies";
 }
-<h1>welcome to movie view</h1>
+
 
 <div class="row">
     @foreach(var item in Model)
@@ -15,9 +15,14 @@
                            <p class="card-text">
                                <h5 class="card-title">
                                    @item.Name
-                                   <a class="text-white float-right" style="cursor: pointer;" asp-action="Edit" asp-route-id="@item.Id" >
-                                       <i class="bi bi-pencil-square cursor-pointer"></i>
-                                   </a>
+                                    @if(User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                                    {
+                                       <a class="text-white float-right" style="cursor: pointer;" asp-action="Edit" asp-route-id="@item.Id" >
+                                        <i class="bi bi-pencil-square cursor-pointer"></i>
+                                       </a>
+                                        
+                                    }
+                                    
                                </h5>
                            </p>
                        </div>
